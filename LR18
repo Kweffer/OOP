@@ -1,0 +1,19 @@
+// MainWindow.xaml.cs
+private void BtnCalc_Click(object sender, RoutedEventArgs e)
+{
+    if (!double.TryParse(txtX.Text, out double x) ||
+        !double.TryParse(txtY.Text, out double y) ||
+        !int.TryParse(txtN.Text, out int N) ||
+        !int.TryParse(txtM.Text, out int M))
+    {
+        Title = "ERROR";
+        return;
+    }
+
+    double Z = 0;
+    for (int i = 1; i <= N; i++)
+        for (int j = 1; j <= M; j++)
+            Z += (Math.Cos(i * x) + Math.Sin(j * y)) / (i * j);
+
+    Title = $"Z = {Z:F4}";
+}
