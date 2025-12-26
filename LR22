@@ -1,0 +1,21 @@
+using System;
+using System.Threading.Tasks;
+
+async Task CalcAvgAsync(int n, int m)
+{
+    return await Task.Run(() =>
+    {
+        var rnd = new Random();
+        double sum = 0;
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                sum += rnd.NextDouble() * 100;
+        return sum / (n * m);
+    });
+}
+
+int N = 10;
+int M = 5;
+
+double result = await CalcAvgAsync(N, M);
+Console.WriteLine($"Average: {result}");
