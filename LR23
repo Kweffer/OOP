@@ -1,0 +1,10 @@
+void CountChar(object data)
+{
+    var p = (Tuple<string, char>)data;
+    int count = p.Item1.Count(c => c == p.Item2);
+    Console.WriteLine($"Count: {count}");
+}
+
+// Запуск:
+var thread = new Thread(CountChar);
+thread.Start(Tuple.Create("Hello world", 'l'));
