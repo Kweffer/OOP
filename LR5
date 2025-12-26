@@ -1,0 +1,64 @@
+// Program.cs
+using System;
+using System.IO;
+using System.Linq;
+
+namespace LR5
+{
+    class Program
+    {
+        static void Main()
+        {
+            var saveIn = Console.In;
+            var saveOut = Console.Out;
+
+            using var reader = new StreamReader("input.txt");
+            using var writer = new StreamWriter("output.txt");
+
+            Console.SetIn(reader);
+            Console.SetOut(writer);
+
+            string[] dims = Console.ReadLine().Split();
+            int N = int.Parse(dims[0]);
+            int M = int.Parse(dims[1]);
+
+            int[,] mat = new int[N, M];
+            for (int i = 0; i < N; i++)
+            {
+                string[] row = Console.ReadLine().Split();
+                for (int j = 0; j < M; j++)
+                {
+                    mat[i, j] = int.Parse(row[j]);
+                }
+            }
+
+            // Вывод исходной матрицы
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < M; j++)
+                {
+                    Console.Write(mat[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+            // max и min элементы
+            int max = mat.Cast<int>().Max();
+            int min = mat.Cast<int>().Min();
+            Console.WriteLine($"{max} {min}");
+
+            // Замена: <100 → "-", иначе "+"
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < M; j++)
+                {
+                    Console.Write(mat[i, j] < 100 ? "- " : "+ ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.SetIn(saveIn);
+            Console.SetOut(saveOut);
+        }
+    }
+}
