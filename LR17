@@ -1,0 +1,34 @@
+// Form1.cs
+private Color graphColor = Color.Blue;
+private bool isAnimating = false;
+
+private void panelGraf_Paint(object sender, PaintEventArgs e)
+{
+    var g = e.Graphics;
+    Pen pen = new Pen(graphColor, 2);
+
+    for (int x = 0; x < panelGraf.Width; x++)
+    {
+        double y = Math.Sin(x * 0.1) * 50 + panelGraf.Height / 2;
+        g.DrawLine(pen, x, (float)y, x + 1, (float)y);
+    }
+}
+
+private void panelGraf_MouseMove(object sender, MouseEventArgs e)
+{
+    double y = Math.Sin(e.X * 0.1) * 50 + panelGraf.Height / 2;
+    if (Math.Abs(e.Y - y) < 5)
+        graphColor = Color.Red;
+    else
+        graphColor = Color.Blue;
+    panelGraf.Invalidate();
+}
+
+private void btnColor_Click(object sender, EventArgs e)
+{
+    if (colorDialog1.ShowDialog() == DialogResult.OK)
+        graphColor = colorDialog1.Color;
+    panelGraf.Invalidate();
+}
+
+// Анимация — Timer меняет graphColor каждые 500 мс
