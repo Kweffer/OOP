@@ -1,0 +1,36 @@
+// Form1.cs
+private void btnCalculate_Click(object sender, EventArgs e)
+{
+    if (!double.TryParse(txtX.Text, out double x) ||
+        !int.TryParse(txtN.Text, out int N) || N <= 0)
+    {
+        MessageBox.Show("Invalid input");
+        return;
+    }
+
+    double V = 0;
+    double term = x;
+    for (int i = 1; i <= N; i++)
+    {
+        if (i > 1) term *= -x / i;
+        V += term;
+    }
+
+    lblResult.Text = $"V = {V:F6}";
+}
+
+// ColorDialog
+private void btnColor_Click(object sender, EventArgs e)
+{
+    if (colorDialog1.ShowDialog() == DialogResult.OK)
+        this.BackColor = colorDialog1.Color;
+}
+
+// SaveFileDialog
+private void btnSave_Click(object sender, EventArgs e)
+{
+    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+        System.IO.File.WriteAllText(saveFileDialog1.FileName, lblResult.Text);
+}
+
+// OpenFileDialog для загрузки параметров (по желанию)
