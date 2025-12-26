@@ -1,0 +1,27 @@
+using System;
+
+public interface IDrawable { void Draw(); }
+public interface ICalculatable { double Area(); double Perimeter(); }
+
+public class Circle : IDrawable, ICalculatable
+{
+    public double R;
+    public void Draw() => Console.WriteLine("Drawing Circle");
+    public double Area() => Math.PI * R * R;
+    public double Perimeter() => 2 * Math.PI * R;
+}
+
+// Entry point class
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Example usage of the Circle class
+        Circle circle = new Circle();
+        circle.R = 5.0;
+        
+        circle.Draw();
+        Console.WriteLine($"Area: {circle.Area()}");
+        Console.WriteLine($"Perimeter: {circle.Perimeter()}");
+    }
+}
