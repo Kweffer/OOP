@@ -1,0 +1,52 @@
+public class Domain
+{
+    public string DomainName, User;
+    public double Price;
+    public int Category;
+    public bool IsSelling;
+
+    public static Domain Parse(string line)
+    {
+        var parts = line.Split(new string[] { ", " }, StringSplitOptions.None);
+        return new Domain
+        {
+            DomainName = parts[0],  
+            User = parts[1],  
+            Price = double.Parse(parts[2]),  
+            Category = int.Parse(parts[3]),  
+            IsSelling = bool.Parse(parts[4])
+        };
+    }
+}
+using System;
+using System.IO;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        var lines = File.ReadAllLines("domains.csv").Skip(1);
+        var domains = lines.Select(Domain.Parse).ToList();
+
+        // 1. Кол-во с пустыми domain или user
+        int emptyCount = domains.Count(d => string.IsNullOrEmpty(d.DomainName) || string.IsNullOrEmpty(d.User));
+
+        // 2. Средняя цена по категориям
+        var avgByCat = domains.GroupBy(d => d.Category).ToDictionary(g => g.Key, g => g.Average(d => d.Price));
+
+        // 3. Макс цена среди продающихся/непродающихся
+        double? maxSelling = domains.Where(d => d.IsSelling).MaxBy(d => d.Price)?.Price;
+        double? maxNotSelling = domains.Where(d => !d.IsSelling).MaxBy(d => d.Price)?.Price;
+
+        // 4. Сумма доменов без имени
+        double sumNoName = domains.Where(d => string.IsNullOrEmpty(d.DomainName)).Sum(d => d.Price);
+
+        using var writer = new StreamWriter("output.txt");
+        writer.WriteLine($"Empty domain/user count: {emptyCount}");
+        foreach (var kv in avgByCat.OrderBy(x => x.Key))
+            writer.WriteLine($"Category {kv.Key}: {kv.Value:F2}");
+        writer.WriteLine($"Max selling: {maxSelling:F2}, Max not selling: {maxNotSelling:F2}");
+        writer.WriteLine($"Total no-name domains: {sumNoName:F2}");
+    }
+}
