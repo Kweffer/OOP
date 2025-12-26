@@ -1,0 +1,40 @@
+// Program.cs
+using System;
+using System.IO;
+using System.Linq;
+
+namespace LR4
+{
+    class Program
+    {
+        static void Main()
+        {
+            var saveIn = Console.In;
+            var saveOut = Console.Out;
+
+            using var reader = new StreamReader("input.txt");
+            using var writer = new StreamWriter("output.txt");
+
+            Console.SetIn(reader);
+            Console.SetOut(writer);
+
+            int N = int.Parse(Console.ReadLine());
+            double[] arr = Array.ConvertAll(Console.ReadLine().Split(), double.Parse);
+
+            double avg = arr.Average();
+            double max = arr.Max();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (Math.Abs(arr[i]) <= 1000) arr[i] = 0;
+            }
+
+            Console.WriteLine($"{avg:F3}");
+            Console.WriteLine($"{max:F3}");
+            Console.WriteLine(string.Join(" ", arr.Select(x => x.ToString("F3"))));
+
+            Console.SetIn(saveIn);
+            Console.SetOut(saveOut);
+        }
+    }
+}
