@@ -1,0 +1,68 @@
+using System;
+using System.IO;
+
+public class RightTriangle
+{
+    private double a, b;
+
+    public RightTriangle() : this(3, 4) { }
+    
+    public RightTriangle(double a, double b) 
+    { 
+        this.a = a; 
+        this.b = b; 
+    }
+    
+    public RightTriangle(string filename)
+    {
+        using var reader = new StreamReader(filename);
+        string? line = reader.ReadLine();
+        
+        if (string.IsNullOrEmpty(line))
+        {
+            throw new ArgumentException("File is empty or could not be read properly.");
+        }
+        
+        var parts = line.Split();
+        
+        if (parts.Length < 2)
+        {
+            throw new ArgumentException("File must contain at least two numbers separated by space.");
+        }
+        
+        if (!double.TryParse(parts[0], out a) || !double.TryParse(parts[1], out b))
+        {
+            throw new ArgumentException("File contains invalid numeric values.");
+        }
+    }
+
+    public double GetHypotenuse() => Math.Sqrt(a * a + b * b);
+    public double GetArea() => a * b / 2.0;
+    public double GetArea(double angle) => 0.5 * a * b * Math.Sin(angle);
+
+    public override string ToString() => $"Triangle(a={a}, b={b})";
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        try
+        {
+            // Example usage
+            var triangle1 = new RightTriangle(); // Uses default constructor
+            Console.WriteLine($"Default triangle: {triangle1}");
+            Console.WriteLine($"Hypotenuse: {triangle1.GetHypotenuse()}");
+            Console.WriteLine($"Area: {triangle1.GetArea()}");
+
+            var triangle2 = new RightTriangle(5, 12); // Uses parameterized constructor
+            Console.WriteLine($"\nCustom triangle: {triangle2}");
+            Console.WriteLine($"Hypotenuse: {triangle2.GetHypotenuse()}");
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}
