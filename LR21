@@ -1,0 +1,19 @@
+public class Book 
+{ 
+    public string Title { get; set; }
+    // Add other properties as needed
+    // public string Author { get; set; }
+    // public int ISBN { get; set; }
+}
+using System.ComponentModel;
+
+public class BookViewModel : INotifyPropertyChanged 
+{ 
+    // Implementation of the view model wrapper
+    public event PropertyChangedEventHandler PropertyChanged;
+    
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
