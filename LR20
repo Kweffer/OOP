@@ -1,0 +1,36 @@
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media;
+
+namespace YourNamespace
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+
+    // You'll also need to implement the ColorConverter
+    public class ColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double sliderValue)
+            {
+                // Convert slider value (0-100) to a color
+                byte colorValue = (byte)(sliderValue * 2.55); // Scale to 0-255
+                return new SolidColorBrush(Color.FromRgb(colorValue, (byte)(255 - colorValue), 128));
+            }
+            return new SolidColorBrush(Colors.Gray);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
