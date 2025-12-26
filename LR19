@@ -1,0 +1,66 @@
+// App.xaml.cs
+using System.Windows;
+
+namespace YourAppNamespace
+{
+    public partial class App : Application
+    {
+        // This is typically empty for basic WPF applications
+    }
+}
+
+            <Setter Property="Fill" Value="Red"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="DarkRed"/>
+                </Trigger>
+            </Style.Triggers>
+        
+        
+        
+        
+            <Setter Property="Fill" Value="Blue"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="DarkBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        
+        
+        
+            <Setter Property="Fill" Value="Green"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="DarkGreen"/>
+                </Trigger>
+            </Style.Triggers>
+        
+        
+        
+            <Setter Property="Fill" Value="Yellow"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="Orange"/>
+                </Trigger>
+            </Style.Triggers>
+// MainWindow.xaml.cs
+using System.Windows;
+
+namespace YourAppNamespace
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}
