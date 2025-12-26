@@ -1,0 +1,59 @@
+// Program.cs + RightTriangle.cs
+// RightTriangle.cs
+using System;
+using System.IO;
+
+public class RightTriangle
+{
+    private double a, b;
+
+    public void Load(StreamReader reader)
+    {
+        var line = reader.ReadLine();
+        if (line == null)
+            throw new InvalidOperationException("End of stream reached");
+        
+        var parts = line.Split();
+        if (parts.Length < 2)
+            throw new FormatException("Input must contain two numbers separated by whitespace");
+            
+        if (!double.TryParse(parts[0], out a) || !double.TryParse(parts[1], out b))
+            throw new FormatException("Unable to parse triangle sides as valid numbers");
+    }
+
+    public double GetHypotenuse() => Math.Sqrt(a * a + b * b);
+    public double GetArea() => a * b / 2.0;
+    public double GetPerimeter() => a + b + GetHypotenuse();
+
+    public void Info(StreamWriter writer)
+    {
+        writer.WriteLine($"Катеты: {a:F2}, {b:F2}");
+        writer.WriteLine($"Гипотенуза: {GetHypotenuse():F3}");
+        writer.WriteLine($"Площадь: {GetArea():F3}");
+        writer.WriteLine($"Периметр: {GetPerimeter():F3}");
+    }
+}
+
+// Program.cs
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+#if DEBUG
+        var triangle = new RightTriangle();
+        triangle.Load(Console.In);
+        triangle.Info(Console.Out);
+#else
+        using (var reader = new StreamReader("input.txt"))
+        using (var writer = new StreamWriter("output.txt"))
+        {
+            var triangle = new RightTriangle();
+            triangle.Load(reader);
+            triangle.Info(writer);
+        }
+#endif
+    }
+}
