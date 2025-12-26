@@ -1,0 +1,26 @@
+using System;
+
+namespace LR1
+{
+    class Program
+    {
+        static void Main()
+        {
+            // Часть 1 — персональная информация
+            Console.WriteLine("Лабораторная работа №1");
+            Console.WriteLine("ФИО: Головин Иван Дмитриевич");
+            Console.WriteLine("Группа: ИСиТ-О-24/2; Шифр: 09.03.02");
+            Console.WriteLine("Дата рождения: 04.05.2006");
+            Console.WriteLine("Город: Буденновск");
+            Console.WriteLine("Любимый предмет: История");
+            Console.WriteLine("Увлечения: гандбол, легкая атлетика");
+
+            // Часть 2 — вычисление выражения
+            double a = 10, b = 5, c = 2, d = 3, e = 4, f = 1;
+            double Z = a / (b - c) + d * e - f;
+            Console.WriteLine($"Z = {a} / ({b} - {c}) + {d} * {e} - {f} = {Z:F3}");
+
+            Console.ReadKey();
+        }
+    }
+}
