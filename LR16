@@ -1,0 +1,45 @@
+// Book.cs
+public class Book
+{
+    public string Title { get; set; }
+    public string Genre { get; set; }
+    public double Price { get; set; }
+}
+
+// Form1.cs
+using System;
+using System.Linq;
+using System.Windows.Forms;
+using System.IO;
+using System.Text;
+
+public partial class Form1 : Form
+{
+    private OpenFileDialog openFileDialog1;
+    private TextBox textBoxResult;
+    private Button btnLoad;
+
+    private void btnLoad_Click(object sender, EventArgs e)
+    {
+        if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
+
+        var books = File.ReadAllLines(openFileDialog1.FileName)
+            .Skip(1)
+            .Select(line => {
+                var p = line.Split(new string[] { ", " }, StringSplitOptions.None);
+                return new Book { Title = p[0], Genre = p[1], Price = double.Parse(p[2]) };
+            }).ToList();
+
+        var byGenre = books.GroupBy(b => b.Genre);
+
+        var result = new StringBuilder();
+        foreach (var g in byGenre)
+        {
+            var min = g.Min(b => b.Price);
+            var avg = g.Average(b => b.Price);
+            result.AppendLine($"{g.Key}: min = {min:F2}, avg = {avg:F2}");
+        }
+
+        textBoxResult.Text = result.ToString();
+    }
+}
