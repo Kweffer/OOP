@@ -1,0 +1,21 @@
+// Form1.cs (фрагмент)
+private void Form1_MouseMove(object sender, MouseEventArgs e)
+{
+    double x = e.X, y = e.Y;
+    toolStripStatusLabelState.Text = $"({x}, {y})";
+
+    if (toolStripMenuItem1.Checked)
+        toolStripStatusLabelResult.Text = Math.Abs(y) < 1e-9 ? "ERR" : $"z = {(x * x / y):F3}";
+    else if (toolStripMenuItem2.Checked)
+        toolStripStatusLabelResult.Text = $"f = {(y - Math.Sin(x)):F3}";
+    else if (toolStripMenuItem3.Checked)
+        toolStripStatusLabelResult.Text = $"z = {(Math.Pow(Math.Cos(x), 2) + Math.Pow(Math.Sin(y), 2)):F3}";
+}
+
+// Обработчики выбора формулы в меню
+private void toolStripMenuItem1_Click(object sender, EventArgs e)
+{
+    toolStripMenuItem1.Checked = true;
+    toolStripMenuItem2.Checked = toolStripMenuItem3.Checked = false;
+}
+// Аналогично для 2 и 3
